@@ -68,6 +68,22 @@ class REST_API_Manager {
             $group = explode('/', $endpoint)[1];
             $grouped_routes[$group][$endpoint] = $route;
           }
+
+          $key = 0;
+          foreach ($grouped_routes as $group => $routes) { ?>
+            <h2><?php echo esc_html($group); ?></h2>
+            <?php foreach ($routes as $endpoint => $route) { ?>
+              <p>
+                <label for="field-<?php echo $key ?>">
+                  <input <?php echo in_array(esc_attr($endpoint), $endpoints) ? 'checked' : '' ?> id="field-<?php echo $key ?>" name="rest_api_manager[]" type="checkbox" value="<?php echo esc_attr($endpoint); ?>">
+                  <span class="slider"></span>
+                  <span><?php echo esc_html($endpoint); ?></span>
+                </label>
+                <a href="<?php echo site_url('wp-json'); ?><?php echo esc_attr($endpoint); ?>" target="_blank">View</a>
+              </p>
+              <?php $key++;
+            }
+          }
         ?>
         <p class="submit"><button class="button button-primary" type="submit">Save Settings</button></p>
       </form>
