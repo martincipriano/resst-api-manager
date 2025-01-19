@@ -14,6 +14,20 @@ if (!defined('ABSPATH')) {
 }
 
 class REST_API_Manager {
+
+  public function __construct()
+  {
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+  }
+
+  public function enqueue_scripts(): void
+  {
+    $stylesheet_url = plugin_dir_url(__FILE__) . 'rest-api-manager.css';
+    $stylesheet_path = plugin_dir_path(__FILE__) . 'rest-api-manager.css';
+    $stylesheet_version = filemtime($stylesheet_path);
+
+    wp_enqueue_style('rest-api-manager', $stylesheet_url, [], $stylesheet_version);
+  }
 }
 
 new REST_API_Manager;
