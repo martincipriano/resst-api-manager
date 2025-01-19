@@ -12,3 +12,8 @@
 if (!defined('ABSPATH')) {
   exit;
 }
+
+class REST_API_Manager {
+}
+
+new REST_API_Manager;
