@@ -43,6 +43,13 @@ class REST_API_Manager {
     $endpoints = $endpoints ? $endpoints : []; ?>
 
     <div class="wrap" id="rest-api-manager">
+
+      <?php if (isset($_GET['updated'])) { ?>
+        <div class="notice notice-success is-dismissible">
+          <p>Settings updated successfully.</p>
+        </div>
+      <?php } ?>
+
       <h1>Rest API Manager</h1>
       <p><strong>Important reminders:</strong></p>
       <ul>
