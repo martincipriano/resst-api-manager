@@ -34,6 +34,10 @@ class REST_API_Manager {
   {
     add_menu_page('REST API Manager', 'API Manager', 'manage_options', 'rest-api-manager', [$this, 'options_page']);
   }
+
+  public function options_page() : void
+  {
+  }
 }
 
 new REST_API_Manager;
