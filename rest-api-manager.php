@@ -36,7 +36,18 @@ class REST_API_Manager {
   }
 
   public function options_page() : void
-  {
+  { ?>
+
+    <div class="wrap" id="rest-api-manager">
+      <h1>Rest API Manager</h1>
+      <p><strong>Important reminders:</strong></p>
+      <ul>
+        <li>Check if WordPress core features (e.g., Block Editor/Gutenberg, admin functionality) rely on the endpoint.</li>
+        <li>Identify plugins or themes that utilize the REST API and may break if access is restricted.</li>
+        <li>Blocking parent endpoints (e.g., /wp/v2/posts) can implicitly block child routes (e.g., /wp/v2/posts/<id>).</li>
+      </ul>
+    </div>
+    <?php
   }
 }
 
