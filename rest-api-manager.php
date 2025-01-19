@@ -18,6 +18,7 @@ class REST_API_Manager {
   public function __construct()
   {
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+    add_action('admin_menu', [$this, 'options_menu']);
   }
 
   public function enqueue_scripts(): void
@@ -27,6 +28,11 @@ class REST_API_Manager {
     $stylesheet_version = filemtime($stylesheet_path);
 
     wp_enqueue_style('rest-api-manager', $stylesheet_url, [], $stylesheet_version);
+  }
+
+  public function options_menu() : void
+  {
+    add_menu_page('REST API Manager', 'API Manager', 'manage_options', 'rest-api-manager', [$this, 'options_page']);
   }
 }
 
