@@ -36,7 +36,11 @@ class REST_API_Manager {
   }
 
   public function options_page() : void
-  { ?>
+  {
+    $server = rest_get_server();
+    $routes = $server->get_routes();
+    $endpoints = get_option('rest_api_manager');
+    $endpoints = $endpoints ? $endpoints : []; ?>
 
     <div class="wrap" id="rest-api-manager">
       <h1>Rest API Manager</h1>
