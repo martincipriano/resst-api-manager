@@ -62,6 +62,12 @@ class REST_API_Manager {
         <input type="hidden" name="action" value="save_rest_api_endpoints">
         <?php
           wp_nonce_field('rest_api_manager');
+          
+          $grouped_routes = [];
+          foreach ($routes as $endpoint => $route) {
+            $group = explode('/', $endpoint)[1];
+            $grouped_routes[$group][$endpoint] = $route;
+          }
         ?>
         <p class="submit"><button class="button button-primary" type="submit">Save Settings</button></p>
       </form>
