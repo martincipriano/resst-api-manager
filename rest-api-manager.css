@@ -1,0 +1,67 @@
+#rest-api-manager ul {
+  list-style: disc;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+}
+#rest-api-manager p {
+  display: flex;
+}
+#rest-api-manager label {
+  display: flex;
+  margin-bottom: .5rem;
+  margin-right: .5rem;
+  user-select: none;
+}
+#rest-api-manager input[type="checkbox"] {
+  display: none;
+}
+#rest-api-manager input[type="checkbox"] + .slider {
+  background-color: #00a32a;
+  border-radius: 34px;
+  cursor: pointer;
+  display: block;
+  height: 20px;
+  position: relative;
+  transition: background-color 0.4s;
+  width: 40px;
+}
+#rest-api-manager input[type="checkbox"]:checked + .slider {
+  background-color: #d63638;
+}
+#rest-api-manager input[type="checkbox"] + .slider:before {
+  background-color: white;
+  border-radius: 50%;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  transition: transform 0.2s;
+  width: 16px;
+}
+
+#rest-api-manager input[type="checkbox"]:checked + .slider:before {
+  transform: translateX(20px);
+}
+#rest-api-manager .slider {
+  border-radius: 34px;
+  background-color: #ccc;
+  display: block;
+  margin-right: .5rem;
+  position: relative;
+  height: 20px;
+  width: 40px;
+}
+#rest-api-manager .slider:before {
+  border-radius: 50%;
+  background-color: white;
+  content: "";
+  height: 16px;
+  left: 2px;
+  position: absolute;
+  top: 2px;
+  width: 16px;
+}
+#rest-api-manager input[type="checkbox"] {
+  display: none;
+}
