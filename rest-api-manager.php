@@ -19,6 +19,7 @@ class REST_API_Manager {
   {
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
     add_action('admin_menu', [$this, 'options_menu']);
+    add_action('admin_post_save_rest_api_endpoints', [$this, 'save_rest_api_endpoints']);
   }
 
   public function enqueue_scripts(): void
@@ -89,6 +90,17 @@ class REST_API_Manager {
       </form>
     </div>
     <?php
+  }
+
+  public function save_rest_api_endpoints() : void
+  {
+    if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], 'rest_api_manager')) {
+      wp_die('Unauthorized user');
+    } else {
+      update_option('rest_api_manager', $_POST['rest_api_manager'] ?? []);
+      wp_redirect(admin_url('admin.php?page=rest-api-manager&updated'));
+    }
+    exit;
   }
 }
 
