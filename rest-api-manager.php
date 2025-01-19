@@ -20,6 +20,7 @@ class REST_API_Manager {
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
     add_action('admin_menu', [$this, 'options_menu']);
     add_action('admin_post_save_rest_api_endpoints', [$this, 'save_rest_api_endpoints']);
+    add_filter('rest_authentication_errors', [$this, 'block_rest_api_endpoints'], 10, 1);
   }
 
   public function enqueue_scripts(): void
@@ -101,6 +102,19 @@ class REST_API_Manager {
       wp_redirect(admin_url('admin.php?page=rest-api-manager&updated'));
     }
     exit;
+  }
+
+  public function block_rest_api_endpoints($result)
+  {
+    $endpoints = get_option('rest_api_manager');
+    foreach ($endpoints as $endpoint) {
+      if (strpos($_SERVER['REQUEST_URI'], $endpoint) !== false) {
+        return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.'), [
+          'status' => 403
+        ]);
+      }
+    }
+    return $result;
   }
 }
 
