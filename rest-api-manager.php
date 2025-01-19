@@ -60,7 +60,9 @@ class REST_API_Manager {
 
       <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
         <input type="hidden" name="action" value="save_rest_api_endpoints">
-        
+        <?php
+          wp_nonce_field('rest_api_manager');
+        ?>
         <p class="submit"><button class="button button-primary" type="submit">Save Settings</button></p>
       </form>
     </div>
