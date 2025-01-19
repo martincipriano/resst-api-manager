@@ -57,6 +57,12 @@ class REST_API_Manager {
         <li>Identify plugins or themes that utilize the REST API and may break if access is restricted.</li>
         <li>Blocking parent endpoints (e.g., /wp/v2/posts) can implicitly block child routes (e.g., /wp/v2/posts/<id>).</li>
       </ul>
+
+      <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+        <input type="hidden" name="action" value="save_rest_api_endpoints">
+        
+        <p class="submit"><button class="button button-primary" type="submit">Save Settings</button></p>
+      </form>
     </div>
     <?php
   }
