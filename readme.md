@@ -4,8 +4,8 @@ REST API Manager** is a powerful plugin designed for administrators to gain bett
 
 ## Features
 
-- **View all registered REST API endpoints.
-- **Prevent unauthorized access to sensitive data by enabling/disabling specific endpoints.
+- View all registered REST API endpoints.
+- Prevent unauthorized access to sensitive data by enabling/disabling specific endpoints.
 
 ## Why Use REST API Manager?
 
