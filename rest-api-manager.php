@@ -99,11 +99,11 @@ class REST_API_Manager {
 
   public function save_rest_api_endpoints() : void
   {
-    if (!current_user_can('manage_options') || !wp_verify_nonce($_POST['_wpnonce'], 'rest_api_manager')) {
-      wp_die('Unauthorized user');
-    } else {
+    if (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'rest_api_manager')) {
       update_option('rest_api_manager', $_POST['rest_api_manager'] ?? []);
       wp_redirect(admin_url('admin.php?page=rest-api-manager&updated'));
+    } else {
+      wp_die('Security check failed.');
     }
     exit;
   }
