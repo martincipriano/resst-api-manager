@@ -4,9 +4,6 @@ body.settings_page_rest_api_manager .form-table th {
 body.settings_page_rest_api_manager .form-table td {
   padding: 0;
 }
-
-
-
 #rest-api-manager ul {
   list-style: disc;
   margin-bottom: 2rem;
@@ -14,18 +11,22 @@ body.settings_page_rest_api_manager .form-table td {
 }
 #rest-api-manager p {
   display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 #rest-api-manager label {
   display: flex;
-  margin-bottom: .5rem;
-  margin-right: .5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
   user-select: none;
+  gap: 0.5rem;
 }
 #rest-api-manager input[type="checkbox"] {
   display: none;
 }
 #rest-api-manager input[type="checkbox"] + .slider {
-  background-color: #00a32a;
+  background-color: #00a32a; /* Default OFF state */
   border-radius: 34px;
   cursor: pointer;
   display: block;
@@ -35,28 +36,27 @@ body.settings_page_rest_api_manager .form-table td {
   width: 40px;
 }
 #rest-api-manager input[type="checkbox"]:checked + .slider {
-  background-color: #d63638;
+  background-color: #d63638; /* ON state */
 }
 #rest-api-manager input[type="checkbox"] + .slider:before {
   background-color: white;
   border-radius: 50%;
   content: "";
   height: 16px;
-  left: 2px;
+  right: 2px; /* Circle on the right by default */
   position: absolute;
   top: 2px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.4s;
   width: 16px;
+  transform: translateX(0); /* Default position */
 }
-
 #rest-api-manager input[type="checkbox"]:checked + .slider:before {
-  transform: translateX(20px);
+  transform: translateX(-20px); /* Move circle to the left */
 }
 #rest-api-manager .slider {
   border-radius: 34px;
   background-color: #ccc;
   display: block;
-  margin-right: .5rem;
   position: relative;
   height: 20px;
   width: 40px;
@@ -66,11 +66,6 @@ body.settings_page_rest_api_manager .form-table td {
   background-color: white;
   content: "";
   height: 16px;
-  left: 2px;
   position: absolute;
-  top: 2px;
   width: 16px;
-}
-#rest-api-manager input[type="checkbox"] {
-  display: none;
 }
