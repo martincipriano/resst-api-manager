@@ -1,3 +1,12 @@
+body.settings_page_rest_api_manager .form-table th {
+  display: none;
+}
+body.settings_page_rest_api_manager .form-table td {
+  padding: 0;
+}
+
+
+
 #rest-api-manager ul {
   list-style: disc;
   margin-bottom: 2rem;
