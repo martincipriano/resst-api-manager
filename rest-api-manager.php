@@ -34,7 +34,7 @@ class REST_API_Manager {
 
   public function options_menu() : void
   {
-    add_menu_page('REST API Manager', 'API Manager', 'manage_options', 'rest-api-manager', [$this, 'options_page']);
+    add_options_page('REST API Manager','REST API Manager','manage_options','rest-api-manager',[$this, 'options_page']);
   }
 
   public function options_page() : void
@@ -46,11 +46,14 @@ class REST_API_Manager {
 
     <div class="wrap" id="rest-api-manager">
 
-      <?php if (isset($_GET['updated'])) { ?>
-        <div class="notice notice-success is-dismissible">
-          <p>Settings updated successfully.</p>
-        </div>
-      <?php } ?>
+      <?php if (isset($_GET['updated']) && (isset($_GET['nonce']))) {
+        $nonce = sanitize_text_field(wp_unslash($_GET['nonce']));
+        if (wp_verify_nonce($nonce, 'rest_api_manager')) { ?>
+          <div class="notice notice-success is-dismissible">
+            <p>Settings updated successfully.</p>
+          </div>
+        <?php }
+      } ?>
 
       <h1>Rest API Manager</h1>
       <p><strong>Important reminders:</strong></p>
@@ -74,14 +77,15 @@ class REST_API_Manager {
           $key = 0;
           foreach ($grouped_routes as $group => $routes) { ?>
             <h2><?php echo esc_html($group); ?></h2>
-            <?php foreach ($routes as $endpoint => $route) { ?>
+            <?php foreach ($routes as $endpoint => $route) {
+              $checked = in_array($endpoint, wp_unslash($endpoints)) ? 'checked' : ''; ?>
               <p>
-                <label for="field-<?php echo $key ?>">
-                  <input <?php echo in_array($endpoint, wp_unslash($endpoints)) ? 'checked' : '' ?> id="field-<?php echo $key ?>" name="rest_api_manager[]" type="checkbox" value="<?php echo esc_attr($endpoint); ?>">
+                <label for="field-<?php echo esc_attr($key); ?>">
+                  <input <?php echo esc_attr($checked); ?> id="field-<?php echo esc_attr($key) ?>" name="rest_api_manager[]" type="checkbox" value="<?php echo esc_attr($endpoint); ?>">
                   <span class="slider"></span>
                   <span><?php echo esc_html($endpoint); ?></span>
                 </label>
-                <a href="<?php echo site_url('wp-json'); ?><?php echo esc_attr($endpoint); ?>" target="_blank">View</a>
+                <a href="<?php echo esc_attr(site_url('wp-json')); ?><?php echo esc_attr($endpoint); ?>" target="_blank">View</a>
               </p>
               <?php $key++;
             }
@@ -111,7 +115,7 @@ class REST_API_Manager {
     foreach ($endpoints as $endpoint_pattern) {
       $regex_pattern = '@' . preg_replace('/\(\?P<\w+>/', '(', wp_unslash($endpoint_pattern)) . '$@';
       if (preg_match($regex_pattern, $request_uri)) {
-        return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.'), [
+        return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.', 'rest-api-manager'), [
           'status' => 403
         ]);
       }
