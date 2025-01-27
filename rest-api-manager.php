@@ -107,8 +107,10 @@ class REST_API_Manager {
   public function block_rest_api_endpoints($result)
   {
     $endpoints = get_option('rest_api_manager');
-    foreach ($endpoints as $endpoint) {
-      if (strpos($_SERVER['REQUEST_URI'], $endpoint) !== false) {
+    $request_uri = $_SERVER['REQUEST_URI'];
+    foreach ($endpoints as $endpoint_pattern) {
+      $regex_pattern = '@' . preg_replace('/\(\?P<\w+>/', '(', $endpoint_pattern) . '$@';
+      if (preg_match($regex_pattern, $request_uri)) {
         return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.'), [
           'status' => 403
         ]);
