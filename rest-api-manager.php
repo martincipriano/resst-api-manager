@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Rest API Manager
+ * Plugin Name: REST API Manager
  * Description: A WordPress plugin to allow the users to toggle the REST API endpoints on and off.
  * Author: Jose Martin Cipriano
  * Version: 1.0.0
@@ -99,11 +99,12 @@ class REST_API_Manager {
 
   public function save_rest_api_endpoints() : void
   {
-    if (isset($_POST['_wpnonce']) && wp_verify_nonce($_POST['_wpnonce'], 'rest_api_manager')) {
-      update_option('rest_api_manager', $_POST['rest_api_manager'] ?? []);
-      wp_redirect(admin_url('admin.php?page=rest-api-manager&updated'));
-    } else {
-      wp_die('Security check failed.');
+    if (isset($_POST['_wpnonce']) && isset($_POST['rest_api_manager'])) {
+      $nonce = sanitize_text_field(wp_unslash($_POST['_wpnonce']));
+      if (wp_verify_nonce($nonce, 'rest_api_manager')) {
+        update_option('rest_api_manager', sanitize_text_field(wp_unslash($_POST['rest_api_manager'])) ?? []);
+        wp_redirect(admin_url('admin.php?page=rest-api-manager&updated'));
+      }
     }
     exit;
   }
@@ -111,13 +112,18 @@ class REST_API_Manager {
   public function block_rest_api_endpoints($result)
   {
     $endpoints = get_option('rest_api_manager');
-    $request_uri = $_SERVER['REQUEST_URI'];
-    foreach ($endpoints as $endpoint_pattern) {
-      $regex_pattern = '@' . preg_replace('/\(\?P<\w+>/', '(', wp_unslash($endpoint_pattern)) . '$@';
-      if (preg_match($regex_pattern, $request_uri)) {
-        return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.', 'rest-api-manager'), [
-          'status' => 403
-        ]);
+    if (isset($_SERVER['REQUEST_URI'])) {
+      $request_uri = esc_url_raw(wp_unslash($_SERVER['REQUEST_URI']));
+      if ($request_uri) {
+        foreach ($endpoints as $endpoint_pattern) {
+          $regex_pattern = '@' . preg_replace('/\(\?P<\w+>/', '(', wp_unslash($endpoint_pattern)) . '$@';
+          if (preg_match($regex_pattern, $request_uri)) {
+            return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.', 'rest-api-manager'), [
+              'status' => 403
+            ]);
+          }
+        }
+        return $result;
       }
     }
     return $result;
