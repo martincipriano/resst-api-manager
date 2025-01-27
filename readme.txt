@@ -11,13 +11,11 @@ A WordPress plugin to manage REST API endpoints, enabling you to toggle them on 
 
 == Description ==
 
-REST API Manager is a powerful plugin designed for administrators to gain better control over WordPress REST API endpoints. This plugin provides a simple interface to toggle specific endpoints on or off, offering improved security and customization for your site.
+**REST API Manager** is a powerful plugin designed for administrators to gain better control over WordPress REST API endpoints. This plugin provides a simple interface to toggle specific endpoints on or off, offering improved security and customization for your site.
 
 **Features:**
 - View all registered REST API endpoints.
-- Enable or disable specific endpoints with a single click.
-- Prevent unauthorized access to sensitive data via REST API.
-- Fully integrates with the WordPress admin dashboard.
+- Prevent unauthorized access to sensitive data by enabling/disabling specific endpoints.
 
 **Use Cases:**
 - Enhance security by disabling unused or vulnerable API endpoints.
@@ -28,7 +26,10 @@ REST API Manager is a powerful plugin designed for administrators to gain better
 
 1. Upload the `rest-api-manager` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Navigate to **REST API** in the admin menu to start managing your endpoints.
+3. Navigate to **REST API Manager** under settings in the admin menu to manage your endpoints.
+
+== Usage ==
+- Activate/deactivate REST API endpoints from the REST API Manager settings by clicking the toggle UI.
 
 == Frequently Asked Questions ==
 
@@ -50,8 +51,9 @@ Yes! Any registered custom endpoint will appear in the plugin settings page.
 
 = 1.0.0 =
 * Initial release.
-* Manage REST API endpoints via the admin interface.
-* Secure and straightforward endpoint toggling.
+* Created a settings page to list all the REST API endpoints.
+* Created a custom toggle UI instead of checkboxes.
+* Block deactivated REST API endpoints.
 
 == Upgrade Notice ==
 
@@ -60,4 +62,9 @@ Initial release - safe to use on live sites, but ensure to test endpoint changes
 
 == License ==
 
-This plugin is licensed under the GPLv2 or later. See [https://www.gnu.org/licenses/gpl-2.0.html](https://www.gnu.org/licenses/gpl-2.0.html) for details.
+This plugin is licensed under the GNU General Public License v2.0 or later.  
+You may obtain a copy of the license at: https://www.gnu.org/licenses/gpl-2.0.html
+
+== Screenshots ==
+1. REST API Manager UI
+  *Description: Displays a list of activated/deactivated REST API endpoints.*
