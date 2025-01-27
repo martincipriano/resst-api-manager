@@ -77,7 +77,7 @@ class REST_API_Manager {
             <?php foreach ($routes as $endpoint => $route) { ?>
               <p>
                 <label for="field-<?php echo $key ?>">
-                  <input <?php echo in_array(esc_attr($endpoint), $endpoints) ? 'checked' : '' ?> id="field-<?php echo $key ?>" name="rest_api_manager[]" type="checkbox" value="<?php echo esc_attr($endpoint); ?>">
+                  <input <?php echo in_array($endpoint, wp_unslash($endpoints)) ? 'checked' : '' ?> id="field-<?php echo $key ?>" name="rest_api_manager[]" type="checkbox" value="<?php echo esc_attr($endpoint); ?>">
                   <span class="slider"></span>
                   <span><?php echo esc_html($endpoint); ?></span>
                 </label>
@@ -109,7 +109,7 @@ class REST_API_Manager {
     $endpoints = get_option('rest_api_manager');
     $request_uri = $_SERVER['REQUEST_URI'];
     foreach ($endpoints as $endpoint_pattern) {
-      $regex_pattern = '@' . preg_replace('/\(\?P<\w+>/', '(', $endpoint_pattern) . '$@';
+      $regex_pattern = '@' . preg_replace('/\(\?P<\w+>/', '(', wp_unslash($endpoint_pattern)) . '$@';
       if (preg_match($regex_pattern, $request_uri)) {
         return new \WP_Error('rest_forbidden', __('Access to this endpoint is forbidden.'), [
           'status' => 403
