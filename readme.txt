@@ -20,7 +20,7 @@ A WordPress plugin to manage REST API endpoints, enabling you to toggle them on 
 **Use Cases:**
 - Enhance security by disabling unused or vulnerable API endpoints.
 - Improve performance by reducing REST API traffic.
-- Customize REST API availability to suit your site's requirements.
+- Fine-tune API availability to meet the needs of your site or app.
 
 == Installation ==
 
@@ -29,7 +29,10 @@ A WordPress plugin to manage REST API endpoints, enabling you to toggle them on 
 3. Navigate to **REST API Manager** under settings in the admin menu to manage your endpoints.
 
 == Usage ==
-- Activate/deactivate REST API endpoints from the REST API Manager settings by clicking the toggle UI.
+1. Navigate to REST API Manager under settings in the WordPress admin menu.
+2. View a list of all registered REST API endpoints.
+3. Toggle endpoints on or off using the provided interface.
+4. Click **Save Settings** to apply your changes.
 
 == Frequently Asked Questions ==
 
