@@ -1,6 +1,6 @@
 # REST API Manager
 
-REST API Manager** is a powerful plugin designed for administrators to gain better control over WordPress REST API endpoints. This plugin provides a simple interface to toggle specific endpoints on or off, offering improved security and customization for your site.
+REST API Manager is a powerful plugin designed for administrators to gain better control over WordPress REST API endpoints. This plugin provides a simple interface to toggle specific endpoints on or off, offering improved security and customization for your site.
 
 ## Features
 
