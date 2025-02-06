@@ -17,13 +17,13 @@ class REST_API_Manager {
 
   public function __construct()
   {
-    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
-    add_action('admin_menu', [$this, 'options_menu']);
-    add_action('admin_init', [$this, 'register_settings']);
-    add_filter('rest_authentication_errors', [$this, 'block_rest_api_endpoints'], 10, 1);
+    add_action('admin_enqueue_scripts', [$this, 'restmgr_enqueue_scripts']);
+    add_action('admin_menu', [$this, 'restmgr_options_menu']);
+    add_action('admin_init', [$this, 'restmgr_register_settings']);
+    add_filter('rest_authentication_errors', [$this, 'resstmgr_block_rest_api_endpoints'], 10, 1);
   }
 
-  public function enqueue_scripts(): void
+  public function restmgr_enqueue_scripts(): void
   {
     $stylesheet_url = plugin_dir_url(__FILE__) . 'rest-api-manager.css';
     $stylesheet_path = plugin_dir_path(__FILE__) . 'rest-api-manager.css';
@@ -32,12 +32,12 @@ class REST_API_Manager {
     wp_enqueue_style('rest-api-manager', $stylesheet_url, [], $stylesheet_version);
   }
 
-  public function options_menu() : void
+  public function restmgr_options_menu() : void
   {
-    add_options_page('REST API Manager', 'REST API Manager', 'manage_options', 'rest_api_manager', [$this, 'options_page']);
+    add_options_page('REST API Manager', 'REST API Manager', 'manage_options', 'rest_api_manager', [$this, 'restmgr_options_page']);
   }
 
-  public function options_page(): void
+  public function restmgr_options_page(): void
   { ?>
     <div class="wrap" id="rest-api-manager">
       <h1><?php esc_html_e('REST API Manager', 'rest-api-manager'); ?></h1>
@@ -51,14 +51,26 @@ class REST_API_Manager {
     </div>
   <?php }
 
-  public function register_settings(): void
+  public function restmgr_register_settings(): void
   {
-    register_setting('rest_api_manager', 'rest_api_manager_settings');
+    register_setting('rest_api_manager', 'rest_api_manager_settings', [
+      'type' => 'array',
+      'sanitize_callback' => [$this, 'restmgr_sanitize_endpoints']
+    ]);
+
     add_settings_section('rest_api_manager_main', null, null, 'rest_api_manager');
-    add_settings_field('rest_api_block_option', null, [$this, 'render_block_option'], 'rest_api_manager', 'rest_api_manager_main');
+    add_settings_field('rest_api_block_option', null, [$this, 'restmgr_render_block_option'], 'rest_api_manager', 'rest_api_manager_main');
   }
 
-  public function render_block_option(): void
+  public function restmgr_sanitize_endpoints($input)
+  {
+    if (is_array($input)) {
+      return array_map('sanitize_text_field', $input);
+    }
+    return [];
+  }
+
+  public function restmgr_render_block_option(): void
   {
     $server = rest_get_server();
     $routes = $server->get_routes();
@@ -88,7 +100,7 @@ class REST_API_Manager {
     }
   }
 
-  public function block_rest_api_endpoints($result)
+  public function resstmgr_block_rest_api_endpoints($result)
   {
     if (isset($_SERVER['REQUEST_URI'])) {
       $endpoints = get_option('rest_api_manager_settings');
@@ -109,4 +121,4 @@ class REST_API_Manager {
   }
 }
 
-new REST_API_Manager;
+new REST_API_Manager; 
